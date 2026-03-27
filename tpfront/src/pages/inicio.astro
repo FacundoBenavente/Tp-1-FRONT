@@ -1,0 +1,121 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Header />
+		<main>
+            <h1>⚔️ Elige tu Dado ⚔️</h1>
+            <div class="contenedor">
+                <div class="dados">
+                    <button class="dado" data-sides="4">d4</button>
+                    <button class="dado" data-sides="6">d6</button>
+                    <button class="dado" data-sides="8">d8</button>
+                    <button class="dado" data-sides="10">d10</button>
+                    <button class="dado" data-sides="20">d20</button>
+                </div>
+
+                <button class="tirar">🎲 Tirar</button>
+            </div>
+		</main>
+    </body>
+<style>
+    .contenedor {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+    }
+
+    .dados {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+    }
+      
+    .dado {
+        padding: 0.8rem 1.2rem;
+        border: 2px solid #7b2d8b;
+        border-radius: 8px;
+        background: black;
+        color: white;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+      
+    .dado:hover {
+        background: #7b2d8b;
+    }
+      
+    .dado.seleccionado {
+        background: #7b2d8b;
+        transform: scale(1.1);
+    }
+
+    .tirar {
+        padding: 0.9rem 3rem;
+        background: linear-gradient(135deg, #7b2d8b, #4a1060);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-size: 1.3rem;
+        font-weight: bold;
+        cursor: pointer;
+        letter-spacing: 0.05em;
+        box-shadow: 0 4px 15px rgba(123, 45, 139, 0.5);
+        transition: all 0.3s;
+    }
+  
+    .tirar:hover {
+        background: linear-gradient(135deg, #9b3dab, #6a2080);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(123, 45, 139, 0.7);
+    }
+
+    .tirar:active {
+        transform: translateY(0px);
+        box-shadow: 0 2px 8px rgba(123, 45, 139, 0.4);
+    }
+    main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3rem 1rem;
+    gap: 2rem;
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-align: center;
+    background: linear-gradient(135deg, #c084fc, #7b2d8b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 0.08em;
+    text-shadow: none;
+    margin: 0;
+}
+</style>
+
+<script>
+    let dadoSeleccionado = 20;
+  
+    const botones = document.querySelectorAll('.dado');
+  
+    botones.forEach(btn => {
+      btn.addEventListener('click', () => {
+        botones.forEach(b => b.classList.remove('seleccionado'));
+        btn.classList.add('seleccionado');
+        dadoSeleccionado = Number(btn.dataset.sides);
+      });
+    });
+</script>
