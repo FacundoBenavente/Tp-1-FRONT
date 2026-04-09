@@ -24,6 +24,10 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
                 </div>
 
                 <button class="tirar">🎲 Tirar</button>
+                <div class="resultado-container">
+                    <p class="resultado" id="resultado">?</p>
+                </div>
+                <a href="/" class="btn-volver">← Volver</a>
             </div>
 		</main>
     </body>
@@ -104,10 +108,59 @@ h1 {
     text-shadow: none;
     margin: 0;
 }
+
+.resultado-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.resultado {
+    font-size: 5rem;
+    font-weight: bold;
+    background: linear-gradient(135deg, #c084fc, #7b2d8b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    min-width: 120px;
+    text-align: center;
+    transition: transform 0.1s;
+}
+
+.resultado.girando {
+    animation: shake 0.1s infinite;
+}
+
+@keyframes shake {
+    0%   { transform: translateY(0px); }
+    25%  { transform: translateY(-5px); }
+    75%  { transform: translateY(5px); }
+    100% { transform: translateY(0px); }
+}
+
+.btn-volver {
+    position: fixed;
+    bottom: 1rem;
+    left: 1rem;
+    padding: 0.5rem 1.2rem;
+    background: rgba(255, 255, 255, 0.1);
+    color: #c084fc;
+    border: 1px solid #c084fc;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    backdrop-filter: blur(5px);
+    transition: all 0.3s;
+    z-index: 100;
+}
+
+.btn-volver:hover {
+    background: rgba(192, 132, 252, 0.2);
+    transform: translateX(-2px);
+}
 </style>
 
 <script>
-    let dadoSeleccionado = 20;
+        let dadoSeleccionado = 20;
   
     const botones = document.querySelectorAll('.dado');
   
@@ -117,5 +170,32 @@ h1 {
         btn.classList.add('seleccionado');
         dadoSeleccionado = Number(btn.dataset.sides);
       });
-    });
+    }); 
+
+    const btnTirar = document.querySelector('.tirar');
+    const resultadoEl = document.getElementById('resultado');
+
+    btnTirar.addEventListener('click', () => {
+    const resultado = Math.floor(Math.random() * dadoSeleccionado) + 1;
+
+    btnTirar.disabled = true;
+    resultadoEl.classList.add('girando');
+
+    let duracion = 1500; 
+    let intervalo = 80;  
+    let transcurrido = 0;
+
+    const timer = setInterval(() => {
+
+        resultadoEl.textContent = Math.floor(Math.random() * dadoSeleccionado) + 1;
+        transcurrido += intervalo;
+
+        if (transcurrido >= duracion) {
+            clearInterval(timer);
+            resultadoEl.textContent = resultado;
+            resultadoEl.classList.remove('girando');
+            btnTirar.disabled = false;
+        }
+    }, intervalo);
+});
 </script>
