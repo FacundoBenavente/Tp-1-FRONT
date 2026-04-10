@@ -49,8 +49,8 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
         padding: 0.8rem 1.2rem;
         border: 2px solid #7b2d8b;
         border-radius: 8px;
-        background: black;
-        color: white;
+        background: white;
+        color: black;
         font-size: 1.1rem;
         cursor: pointer;
         transition: all 0.2s;
@@ -58,8 +58,16 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
       
     .dado:hover {
         background: #7b2d8b;
+        color: white;
     }
-      
+    :root.dark .dado {
+        background: black;
+        color: white;
+    }
+    :root.dark .dado:hover {
+        background: #7b2d8b;
+        color: white;
+    }
     .dado.seleccionado {
         background: #7b2d8b;
         transform: scale(1.1);
