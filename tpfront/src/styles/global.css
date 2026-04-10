@@ -153,3 +153,37 @@ hr {
 	/* added line to stop words getting smushed together (as they go onto separate lines and some screen readers do not understand line feeds as a space */
 	white-space: nowrap;
 }
+/* ─── Dark mode ─── */
+:root.dark {
+	--bg: #0f0f0f;
+	--bg-card: #1a1a1a;
+	--texto: #ffffff;
+	--acento: #9b3dab;
+	--acento-claro: #c084fc;
+	--borde: #2a2a2a;
+}
+
+:root.dark body {
+	background: #0f0f0f;
+	color: #ffffff;
+}
+
+:root.dark h1,
+:root.dark h2,
+:root.dark h3 {
+	color: #ffffff;
+}
+:root.dark header {
+    background: #0f0f0f;
+    border-bottom: 1px solid #2a2a2a;
+}
+
+:root.dark header a {
+    color: #ffffff;
+}
+main {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
