@@ -13,116 +13,241 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 	<body>
 		<Header />
 		<main>
-            <h1>⚔️ Elige tu Dado ⚔️</h1>
-            <div class="contenedor">
-                <div class="dados">
-                    <button class="dado" data-sides="4">d4</button>
-                    <button class="dado" data-sides="6">d6</button>
-                    <button class="dado" data-sides="8">d8</button>
-                    <button class="dado" data-sides="10">d10</button>
-                    <button class="dado" data-sides="20">d20</button>
-                </div>
+    <div class="card">
+    <!-- Pestañas -->
+    <div class="tabs">
+        <button class="tab activo" data-tab="instrucciones">📖 Instrucciones</button>
+        <button class="tab" data-tab="tirar">🎲 Tirar</button>
+        <button class="tab" data-tab="historial">📜 Historial</button>
+    </div>
 
-                <button class="tirar">🎲 Tirar</button>
-                <div class="resultado-container">
-                    <p class="resultado" id="resultado">?</p>
-                </div>
-                <a href="/" class="btn-volver">← Volver</a>
+    <!-- Contenido instrucciones -->
+    <div class="tab-content activo" id="instrucciones">
+        <div class="pasos">
+            <div class="paso">
+                <span class="paso-icono">1️⃣</span>
+                <p>Elegí el tipo de dado</p>
             </div>
-		</main>
+            <div class="paso">
+                <span class="paso-icono">2️⃣</span>
+                <p>Presioná Tirar y esperá tu destino</p>
+            </div>
+            <div class="paso">
+                <span class="paso-icono">3️⃣</span>
+                <p>El oráculo interpreta el resultado</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contenido tirar -->
+    <div class="tab-content" id="tirar">
+        <div class="seccion-dados">
+            <h2>⚔️ Elige tu Dado ⚔️</h2>
+            <div class="dados">
+                <button class="dado" data-sides="4">d4</button>
+                <button class="dado" data-sides="6">d6</button>
+                <button class="dado" data-sides="8">d8</button>
+                <button class="dado" data-sides="10">d10</button>
+                <button class="dado" data-sides="20">d20</button>
+            </div>
+            <button class="tirar" id="btnTirar">🎲 Tirar</button>
+            <div class="seccion-resultado">
+                <p class="resultado" id="resultado">?</p>
+                <p class="mensaje-narrativo" id="mensajeNarrativo"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contenido historial -->
+    <div class="tab-content" id="historial-tab">
+        <div class="seccion-historial">
+            <ul class="historial" id="historial">
+                <li class="historial-vacio">Aún no tiraste ningún dado...</li>
+            </ul>
+            <button class="btn-limpiar" id="btnLimpiar">🗑️ Limpiar</button>
+        </div>
+    </div>
+</div>
+</main>
     </body>
 <style>
-    .contenedor {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 2rem;
-    }
+.tabs {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    border-bottom: 2px solid var(--borde, #e0d0f0);
+    padding-bottom: 0;
+    margin-bottom: 1.5rem;
+}
 
-    .dados {
-        display: flex;
-        gap: 1rem;
-        justify-content: center;
-    }
-      
-    .dado {
-        padding: 0.8rem 1.2rem;
-        border: 2px solid #7b2d8b;
-        border-radius: 8px;
-        background: white;
-        color: black;
-        font-size: 1.1rem;
-        cursor: pointer;
-        transition: all 0.2s;
-    }
-      
-    .dado:hover {
-        background: #7b2d8b;
-        color: white;
-    }
-    :root.dark .dado {
-        background: black;
-        color: white;
-    }
-    :root.dark .dado:hover {
-        background: #7b2d8b;
-        color: white;
-    }
-    .dado.seleccionado {
-        background: #7b2d8b;
-        transform: scale(1.1);
-    }
+.tab {
+    padding: 0.7rem 1.5rem;
+    background: transparent;
+    border: none;
+    border-bottom: 3px solid transparent;
+    color: #888;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-bottom: -2px;
+}
 
-    .tirar {
-        padding: 0.9rem 3rem;
-        background: linear-gradient(135deg, #7b2d8b, #4a1060);
-        color: white;
-        border: none;
-        border-radius: 12px;
-        font-size: 1.3rem;
-        font-weight: bold;
-        cursor: pointer;
-        letter-spacing: 0.05em;
-        box-shadow: 0 4px 15px rgba(123, 45, 139, 0.5);
-        transition: all 0.3s;
-    }
-  
-    .tirar:hover {
-        background: linear-gradient(135deg, #9b3dab, #6a2080);
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(123, 45, 139, 0.7);
-    }
+.tab:hover {
+    color: #c084fc;
+}
 
-    .tirar:active {
-        transform: translateY(0px);
-        box-shadow: 0 2px 8px rgba(123, 45, 139, 0.4);
-    }
-    main {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        min-height: calc(100vh - 6rem);
-        padding: 1.5rem 1rem 2rem;
-        gap: 2rem;
-    }
-
-h1 {
+.tab.activo {
+    color: #c084fc;
+    border-bottom: 3px solid #c084fc;
     font-weight: bold;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.activo {
+    display: block;
+}
+main {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 2rem 1rem !important;
+    margin: 0 auto !important;
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.card {
+    background: var(--bg-card, #fff);
+    border: 1px solid var(--borde, #e0d0f0);
+    border-radius: 20px;
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 700px;
+    box-shadow: 0 8px 30px rgba(123, 45, 139, 0.15);
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.divisor {
+    border: none;
+    border-top: 1px solid var(--borde, #e0d0f0);
+    margin: 0;
+}
+
+/* ─── Instrucciones ─── */
+.seccion-instrucciones h2,
+.seccion-dados h2,
+.seccion-historial h2 {
+    font-size: 1.5rem;
     text-align: center;
     background: linear-gradient(135deg, #c084fc, #7b2d8b);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    letter-spacing: 0.08em;
-    text-shadow: none;
-    margin: 0;
-    padding-top: 1rem;
+    margin-bottom: 1.5rem;
 }
 
-.resultado-container {
+.pasos {
     display: flex;
+    gap: 1rem;
     justify-content: center;
+    flex-wrap: wrap;
+}
+
+.paso {
+    border: 1px solid var(--borde, #e0d0f0);
+    border-radius: 12px;
+    padding: 1rem;
+    width: 160px;
+    text-align: center;
+    transition: transform 0.2s;
+}
+
+.paso:hover {
+    transform: translateY(-4px);
+}
+
+.paso-icono {
+    font-size: 2rem;
+}
+
+.paso p {
+    margin: 0.5rem 0 0;
+    font-size: 0.9rem;
+}
+
+/* ─── Dados ─── */
+.seccion-dados {
+    display: flex;
+    flex-direction: column;
     align-items: center;
+    gap: 1.5rem;
+}
+
+.dados {
+    display: flex;
+    gap: 0.8rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.dado {
+    padding: 0.8rem 1.2rem;
+    border: 2px solid #7b2d8b;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--texto, #1a1a1a);
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.dado:hover {
+    background: #7b2d8b;
+    color: white;
+}
+
+.dado.seleccionado {
+    background: #7b2d8b;
+    color: white;
+    transform: scale(1.1);
+}
+
+.tirar {
+    padding: 0.9rem 3rem;
+    background: linear-gradient(135deg, #7b2d8b, #4a1060);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(123, 45, 139, 0.5);
+    transition: all 0.3s;
+}
+
+.tirar:hover {
+    background: linear-gradient(135deg, #9b3dab, #6a2080);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(123, 45, 139, 0.7);
+}
+
+.tirar:active {
+    transform: translateY(0px);
+}
+
+.tirar:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* ─── Resultado ─── */
+.seccion-resultado {
+    text-align: center;
 }
 
 .resultado {
@@ -131,9 +256,7 @@ h1 {
     background: linear-gradient(135deg, #c084fc, #7b2d8b);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    min-width: 120px;
-    text-align: center;
-    transition: transform 0.1s;
+    margin: 0;
 }
 
 .resultado.girando {
@@ -147,29 +270,93 @@ h1 {
     100% { transform: translateY(0px); }
 }
 
-.btn-volver {
-    position: fixed;
-    bottom: 1rem;
-    left: 1rem;
-    padding: 0.5rem 1.2rem;
-    background: rgba(255, 255, 255, 0.1);
-    color: #c084fc;
-    border: 1px solid #c084fc;
-    border-radius: 8px;
-    text-decoration: none;
-    font-size: 0.9rem;
-    backdrop-filter: blur(5px);
-    transition: all 0.3s;
-    z-index: 100;
+.mensaje-narrativo {
+    font-size: 1rem;
+    font-style: italic;
+    color: var(--acento-claro, #c084fc);
+    margin-top: 0.5rem;
+    min-height: 1.5rem;
 }
 
-.btn-volver:hover {
-    background: rgba(192, 132, 252, 0.2);
-    transform: translateX(-2px);
+/* ─── Historial ─── */
+.seccion-historial {
+    text-align: center;
+}
+
+.historial {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.historial li {
+    background: var(--bg, #f5f0ff);
+    border: 1px solid var(--borde, #e0d0f0);
+    border-radius: 8px;
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+}
+
+.historial-vacio {
+    color: #888;
+    font-style: italic;
+}
+
+.btn-limpiar {
+    padding: 0.5rem 1.5rem;
+    background: transparent;
+    border: 1px solid #ef4444;
+    color: #ef4444;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-limpiar:hover {
+    background: #ef4444;
+    color: white;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 600px) {
+    .card {
+        padding: 1.5rem 1rem;
+    }
+
+    .pasos {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .paso {
+        width: 100%;
+    }
+
+    .resultado {
+        font-size: 3.5rem;
+    }
 }
 </style>
 
 <script>
+    // Pestañas
+    const tabs = document.querySelectorAll('.tab');
+    const contents = document.querySelectorAll('.tab-content');
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            tabs.forEach(t => t.classList.remove('activo'));
+            contents.forEach(c => c.classList.remove('activo'));
+
+            tab.classList.add('activo');
+            document.getElementById(tab.dataset.tab === 'historial' ? 'historial-tab' : tab.dataset.tab).classList.add('activo');
+        });
+    });
+
+    //selección de dado y tirada
         let dadoSeleccionado = 20;
   
     const botones = document.querySelectorAll('.dado');
