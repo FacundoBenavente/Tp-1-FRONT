@@ -6,4 +6,4 @@ items resueltos:
 - requisitos minimos
 - animaciónes
 - dark mode
-- deploy
+- deploy: https://tp-1-front-jeqts3pku-facundobenaventes-projects.vercel.app?_vercel_share=2LfIwn5Cw1RXw0BLwY37YCtVpozSDNl8
