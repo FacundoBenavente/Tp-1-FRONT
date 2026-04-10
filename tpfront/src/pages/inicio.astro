@@ -81,7 +81,8 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 }
 
 .tab {
-    padding: 0.7rem 1.5rem;
+    width: 160px;
+    padding: 0.7rem 1rem;
     background: transparent;
     border: none;
     border-bottom: 3px solid transparent;
@@ -90,6 +91,7 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
     cursor: pointer;
     transition: all 0.2s;
     margin-bottom: -2px;
+    text-align: center;
 }
 
 .tab:hover {
@@ -99,7 +101,6 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 .tab.activo {
     color: #c084fc;
     border-bottom: 3px solid #c084fc;
-    font-weight: bold;
 }
 
 .tab-content {
@@ -392,7 +393,38 @@ main {
             resultadoEl.textContent = resultado;
             resultadoEl.classList.remove('girando');
             btnTirar.disabled = false;
+
+            historial.push({ sides: dadoSeleccionado, resultado });
+            localStorage.setItem('historial', JSON.stringify(historial));
+            renderHistorial();
         }
+    
+    
     }, intervalo);
 });
+
+    // HISTORIAL
+    let historial = JSON.parse(localStorage.getItem('historial') || '[]');
+        const historialEl = document.getElementById('historial');
+        const btnLimpiar = document.getElementById('btnLimpiar');
+
+        function renderHistorial() {
+            if (historial.length === 0) {
+                historialEl.innerHTML = '<li class="historial-vacio">Aún no tiraste ningún dado...</li>';
+                return;
+            }
+            historialEl.innerHTML = historial
+                .slice(-5)
+                .reverse()
+                .map(h => `<li>🎲 d${h.sides} → <strong>${h.resultado}</strong></li>`)
+                .join('');
+        }
+
+        renderHistorial();
+
+        btnLimpiar.addEventListener('click', () => {
+            historial = [];
+            localStorage.removeItem('historial');
+            renderHistorial();
+        });
 </script>
