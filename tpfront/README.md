@@ -7,3 +7,10 @@ items resueltos:
 - animaciónes
 - dark mode
 - deploy: https://tp-1-front-jeqts3pku-facundobenaventes-projects.vercel.app?_vercel_share=2LfIwn5Cw1RXw0BLwY37YCtVpozSDNl8
+
+Instalación:
+- tener node descargado
+- Abril terminal
+- cd tpfront
+- npm install
+- npm run dev (abrir server)
